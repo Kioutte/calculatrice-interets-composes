@@ -1,83 +1,123 @@
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculatrice d'intérêts composés</title>
-	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Inclusion de Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        /* Styles généraux */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #1c1c2b;
-            color: #dcdcdc;
+            font-family: 'Georgia', serif; /* Police similaire au design de l'image */
+            background-color: #ffffff;
+            color: #2D2926; /* Noir de Pire */
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
         }
         .container {
             width: 80%;
-            max-width: 1000px;
-            background: #222;
-            padding: 20px;
+            max-width: 900px;
+            padding: 40px;
             border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            color: #dcdcdc;
+            color: #2D2926;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
         }
-        .container h1 {
-            text-align: center;
-            color: #f7ca75;
+        .title-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
         }
-        label, input {
+        .title-container img {
+            max-height: 60px;
+            margin-right: 20px;
+        }
+        .title-container h1 {
+            color: #2D2926; /* Noir pour le texte */
+            font-size: 2.5em;
+            font-weight: normal;
+        }
+        label {
             display: block;
-            margin: 10px 0;
+            margin-top: 15px;
+            font-weight: normal;
+            color: #2D2926;
+            font-size: 1.1em;
         }
         input[type="number"] {
             width: 100%;
-            padding: 8px;
+            padding: 12px;
             border-radius: 5px;
-            border: none;
-            background: #333;
-            color: #f7ca75;
+            border: 1px solid #BBB;
+            margin-top: 8px;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            color: #2D2926;
+            background-color: #f9f9f9;
         }
         button {
             width: 100%;
-            padding: 10px;
+            padding: 15px;
             border: none;
-            background-color: #f7ca75;
-            color: #222;
+            background-color: #BB9959; /* Couleur dorée */
+            color: #ffffff;
             font-weight: bold;
+            font-size: 1.2em;
             cursor: pointer;
             border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #A3824D; /* Doré foncé pour l’effet de survol */
         }
         .result {
             text-align: center;
-            margin-top: 20px;
-            font-size: 1.2em;
+            margin-top: 30px;
+            font-size: 1.3em;
+            color: #2D2926;
+            background-color: #f3f4f6;
+            padding: 20px;
+            border-radius: 10px;
         }
         #chartContainer {
-            margin-top: 30px;
+            margin-top: 40px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        #myChart {
+            max-width: 100%;
+            height: 400px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Calculatrice d'intérêts composés</h1>
+        <div class="title-container">
+            <img src="votre_logo.png" alt="Logo"> <!-- Remplacez 'votre_logo.png' par l'URL ou le chemin vers votre logo -->
+            <h1>Calculatrice d'intérêts composés</h1>
+        </div>
+        
         <label for="capital">Capital initial (€) :</label>
-        <input type="number" id="capital" placeholder="10000" value="10000">
+        <input type="number" id="capital" placeholder="Ex : 10000" value="10000">
 
         <label for="epargne">Épargne mensuelle (€) :</label>
-        <input type="number" id="epargne" placeholder="100" value="100">
+        <input type="number" id="epargne" placeholder="Ex : 100" value="100">
 
         <label for="duree">Horizon de placement (années) :</label>
-        <input type="number" id="duree" placeholder="20" value="20">
+        <input type="number" id="duree" placeholder="Ex : 20" value="20">
 
         <label for="taux">Taux d'intérêt (%) :</label>
-        <input type="number" id="taux" placeholder="5" value="5">
+        <input type="number" id="taux" placeholder="Ex : 5" value="5">
 
         <label for="frequence">Fréquence de versement des intérêts (mois) :</label>
-        <input type="number" id="frequence" placeholder="12" value="12">
+        <input type="number" id="frequence" placeholder="Ex : 12" value="12">
 
         <button onclick="calculerInteretsComposes()">Calculer</button>
 
@@ -97,15 +137,19 @@
             let taux = parseFloat(document.getElementById("taux").value) / 100;
             let frequence = parseInt(document.getElementById("frequence").value);
 
-            // Variables pour les calculs
+            // Vérifier que toutes les valeurs sont correctement saisies
+            if (isNaN(capital) || isNaN(epargne) || isNaN(duree) || isNaN(taux) || isNaN(frequence)) {
+                document.getElementById("resultat").innerText = "Veuillez entrer toutes les valeurs correctement.";
+                return;
+            }
+
+            // Calcul des intérêts composés
             let capital_final = capital;
             let totalVersements = capital;
-            let interets = 0;
             let labels = [];
+            let dataCapital = [];
             let dataVersements = [];
-            let dataInterets = [];
 
-            // Calcul des intérêts composés mensuellement
             for (let i = 1; i <= duree * 12; i++) {
                 capital_final += epargne;
                 totalVersements += epargne;
@@ -114,20 +158,22 @@
                 }
                 labels.push(`Mois ${i}`);
                 dataVersements.push(totalVersements);
-                dataInterets.push(capital_final - totalVersements);
+                dataCapital.push(capital_final);
             }
 
             // Affichage du résultat
             document.getElementById("resultat").innerHTML = `
                 <strong>Capital final :</strong> ${capital_final.toFixed(2)} €<br>
-                <strong>Versements :</strong> ${totalVersements.toFixed(2)} €<br>
-                <strong>Intérêts :</strong> ${(capital_final - totalVersements).toFixed(2)} €
+                <strong>Versements totaux :</strong> ${totalVersements.toFixed(2)} €<br>
+                <strong>Intérêts gagnés :</strong> ${(capital_final - totalVersements).toFixed(2)} €
             `;
 
-            // Création du graphique
-            if (window.myChart) {
+            // Vérifier si un graphique existe déjà, et le détruire avant d'en créer un nouveau
+            if (window.myChart instanceof Chart) {
                 window.myChart.destroy();
             }
+
+            // Création du graphique
             const ctx = document.getElementById('myChart').getContext('2d');
             window.myChart = new Chart(ctx, {
                 type: 'line',
@@ -137,23 +183,53 @@
                         {
                             label: 'Versements',
                             data: dataVersements,
-                            borderColor: '#3e95cd',
-                            fill: false,
+                            borderColor: '#000000', // Noir pour les versements
+                            backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                            borderWidth: 2,
+                            fill: true,
+                            pointRadius: 0,
                         },
                         {
-                            label: 'Intérêts',
-                            data: dataInterets,
-                            borderColor: '#8e5ea2',
+                            label: 'Capital total',
+                            data: dataCapital,
+                            borderColor: '#BB9959', // Doré pour le capital total
+                            backgroundColor: 'rgba(187, 153, 89, 0.4)',
+                            borderWidth: 2,
                             fill: true,
-                            backgroundColor: 'rgba(142, 94, 162, 0.2)',
+                            pointRadius: 0,
                         }
                     ]
                 },
                 options: {
                     responsive: true,
                     scales: {
+                        x: {
+                            ticks: {
+                                color: '#2D2926',
+                                font: {
+                                    size: 12,
+                                }
+                            }
+                        },
                         y: {
                             beginAtZero: true,
+                            ticks: {
+                                color: '#2D2926',
+                                font: {
+                                    size: 12,
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: '#2D2926',
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                }
+                            }
                         }
                     }
                 }
