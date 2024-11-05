@@ -171,10 +171,26 @@
             }
 
             // Affichage du résultat
-            document.getElementById("resultat").innerHTML = `
-                <strong>Capital final :</strong> ${capital_final.toFixed(2)} €<br>
-                <strong>Versements totaux :</strong> ${totalVersements.toFixed(2)} €<br>
-                <strong>Intérêts gagnés :</strong> ${(capital_final - totalVersements).toFixed(2)} €
+                let formattedCapitalFinal = new Intl.NumberFormat('fr-FR', { 
+                    minimumFractionDigits: 2, 
+                    maximumFractionDigits: 2 
+                }).format(capital_final);
+                
+                let formattedTotalVersements = new Intl.NumberFormat('fr-FR', { 
+                    minimumFractionDigits: 2, 
+                    maximumFractionDigits: 2 
+                }).format(totalVersements);
+                
+                let formattedInteretsGagnes = new Intl.NumberFormat('fr-FR', { 
+                    minimumFractionDigits: 2, 
+                    maximumFractionDigits: 2 
+                }).format(capital_final - totalVersements);
+                
+                // Affichage du résultat formaté
+                document.getElementById("resultat").innerHTML = `
+                    <strong>Capital final :</strong> ${formattedCapitalFinal} €<br>
+                    <strong>Versements totaux :</strong> ${formattedTotalVersements} €<br>
+                    <strong>Intérêts gagnés :</strong> ${formattedInteretsGagnes} €
             `;
 
             // Vérifier si un graphique existe déjà, et le détruire avant d'en créer un nouveau
