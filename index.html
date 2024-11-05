@@ -187,6 +187,20 @@
                 }).format(capital_final - totalVersements);
                 
                 // Affichage du résultat formaté
+                function formatNumberWithDot(number) {
+                    // Utiliser 'fr-FR' pour avoir la virgule comme séparateur décimal et espace pour les milliers
+                    return new Intl.NumberFormat('fr-FR', { 
+                        minimumFractionDigits: 2, 
+                        maximumFractionDigits: 2 
+                    }).format(number).replace(/\s/g, '.'); // Remplace les espaces par des points
+                }
+                
+                // Formater les valeurs calculées
+                let formattedCapitalFinal = formatNumberWithDot(capital_final);
+                let formattedTotalVersements = formatNumberWithDot(totalVersements);
+                let formattedInteretsGagnes = formatNumberWithDot(capital_final - totalVersements);
+                
+                // Affichage du résultat formaté
                 document.getElementById("resultat").innerHTML = `
                     <strong>Capital final :</strong> ${formattedCapitalFinal} €<br>
                     <strong>Versements totaux :</strong> ${formattedTotalVersements} €<br>
