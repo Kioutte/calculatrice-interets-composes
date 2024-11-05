@@ -138,73 +138,50 @@
     </div>
 
     <script>
-        function calculerInteretsComposes() {
+       function calculerInteretsComposes() {
             // Récupération des valeurs
             let capital = parseFloat(document.getElementById("capital").value);
             let epargne = parseFloat(document.getElementById("epargne").value);
             let duree = parseInt(document.getElementById("duree").value);
             let taux = parseFloat(document.getElementById("taux").value) / 100;
             let frequence = parseInt(document.getElementById("frequence").value);
-
+        
             // Vérifier que toutes les valeurs sont correctement saisies
             if (isNaN(capital) || isNaN(epargne) || isNaN(duree) || isNaN(taux) || isNaN(frequence)) {
                 document.getElementById("resultat").innerText = "Veuillez entrer toutes les valeurs correctement.";
                 return;
             }
-
+        
             // Calcul des intérêts composés
             let capital_final = capital;
             let totalVersements = capital;
-            let labels = [];
-            let dataCapital = [];
-            let dataVersements = [];
-
             for (let i = 1; i <= duree * 12; i++) {
                 capital_final += epargne;
                 totalVersements += epargne;
                 if (i % frequence === 0) {
                     capital_final *= (1 + taux / (12 / frequence));
                 }
-                labels.push(`Mois ${i}`);
-                dataVersements.push(totalVersements);
-                dataCapital.push(capital_final);
             }
-
-            // Affichage du résultat
-                let formattedCapitalFinal = new Intl.NumberFormat('fr-FR', { 
+        
+            // Fonction pour formater avec un point pour les milliers et une virgule pour les décimales
+            function formatNumberWithDot(number) {
+                return new Intl.NumberFormat('fr-FR', { 
                     minimumFractionDigits: 2, 
                     maximumFractionDigits: 2 
-                }).format(capital_final);
-                
-                let formattedTotalVersements = new Intl.NumberFormat('fr-FR', { 
-                    minimumFractionDigits: 2, 
-                    maximumFractionDigits: 2 
-                }).format(totalVersements);
-                
-                let formattedInteretsGagnes = new Intl.NumberFormat('fr-FR', { 
-                    minimumFractionDigits: 2, 
-                    maximumFractionDigits: 2 
-                }).format(capital_final - totalVersements);
-                
-                // Affichage du résultat formaté
-                function formatNumberWithDot(number) {
-                    // Utiliser 'fr-FR' pour avoir la virgule comme séparateur décimal et espace pour les milliers
-                    return new Intl.NumberFormat('fr-FR', { 
-                        minimumFractionDigits: 2, 
-                        maximumFractionDigits: 2 
-                    }).format(number).replace(/\s/g, '.'); // Remplace les espaces par des points
-                }
-                
-                // Formater les valeurs calculées
-                let formattedCapitalFinal = formatNumberWithDot(capital_final);
-                let formattedTotalVersements = formatNumberWithDot(totalVersements);
-                let formattedInteretsGagnes = formatNumberWithDot(capital_final - totalVersements);
-                
-                // Affichage du résultat formaté
-                document.getElementById("resultat").innerHTML = `
-                    <strong>Capital final :</strong> ${formattedCapitalFinal} €<br>
-                    <strong>Versements totaux :</strong> ${formattedTotalVersements} €<br>
-                    <strong>Intérêts gagnés :</strong> ${formattedInteretsGagnes} €
+                }).format(number).replace(/\s/g, '.'); // Remplace les espaces par des points
+            }
+        
+            // Utilisation de la fonction pour formater chaque résultat
+            let formattedCapitalFinal = formatNumberWithDot(capital_final);
+            let formattedTotalVersements = formatNumberWithDot(totalVersements);
+            let formattedInteretsGagnes = formatNumberWithDot(capital_final - totalVersements);
+        
+            // Affichage du résultat formaté
+            document.getElementById("resultat").innerHTML = `
+                <strong>Capital final :</strong> ${formattedCapitalFinal} €<br>
+                <strong>Versements totaux :</strong> ${formattedTotalVersements} €<br>
+                <strong>Intérêts gagnés :</strong> ${formattedInteretsGagnes} €
+            `;
             `;
 
             // Vérifier si un graphique existe déjà, et le détruire avant d'en créer un nouveau
