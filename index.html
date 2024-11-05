@@ -10,7 +10,7 @@
     <style>
         /* Styles généraux */
         body {
-            font-family: 'Georgia', serif; /* Police similaire au design de l'image */
+            font-family: 'Georgia', serif;
             background-color: #ffffff;
             color: #2D2926; /* Noir de Pire */
             display: flex;
@@ -40,7 +40,7 @@
             margin-bottom: 10px;
         }
         .title-container h1 {
-            color: #2D2926; /* Noir pour le texte */
+            color: #2D2926;
             font-size: 2.5em;
             font-weight: normal;
             margin: 0;
@@ -73,7 +73,7 @@
             width: 100%;
             padding: 15px;
             border: none;
-            background-color: #BB9959; /* Couleur dorée */
+            background-color: #BB9959;
             color: #ffffff;
             font-weight: bold;
             font-size: 1.2em;
@@ -82,7 +82,7 @@
             transition: background-color 0.3s ease;
         }
         button:hover {
-            background-color: #A3824D; /* Doré foncé pour l’effet de survol */
+            background-color: #A3824D;
         }
         .result {
             text-align: center;
@@ -138,7 +138,7 @@
     </div>
 
     <script>
-       function calculerInteretsComposes() {
+        function calculerInteretsComposes() {
             // Récupération des valeurs
             let capital = parseFloat(document.getElementById("capital").value);
             let epargne = parseFloat(document.getElementById("epargne").value);
@@ -155,12 +155,23 @@
             // Calcul des intérêts composés
             let capital_final = capital;
             let totalVersements = capital;
-            for (let i = 1; i <= duree * 12; i++) {
-                capital_final += epargne;
-                totalVersements += epargne;
-                if (i % frequence === 0) {
-                    capital_final *= (1 + taux / (12 / frequence));
+            let labels = [];
+            let dataCapital = [];
+            let dataVersements = [];
+
+            // Boucle par année
+            for (let year = 1; year <= duree; year++) {
+                for (let month = 1; month <= 12; month++) {
+                    capital_final += epargne;
+                    totalVersements += epargne;
+                    if (month % frequence === 0) {
+                        capital_final *= (1 + taux / (12 / frequence));
+                    }
                 }
+                // Ajouter un label pour chaque année
+                labels.push(`Année ${year}`);
+                dataVersements.push(totalVersements);
+                dataCapital.push(capital_final);
             }
         
             // Fonction pour formater avec un point pour les milliers et une virgule pour les décimales
@@ -182,7 +193,6 @@
                 <strong>Versements totaux :</strong> ${formattedTotalVersements} €<br>
                 <strong>Intérêts gagnés :</strong> ${formattedInteretsGagnes} €
             `;
-            `;
 
             // Vérifier si un graphique existe déjà, et le détruire avant d'en créer un nouveau
             if (window.myChart instanceof Chart) {
@@ -194,25 +204,25 @@
             window.myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: labels,
+                    labels: labels, // Afficher les années
                     datasets: [
                         {
                             label: 'Versements',
                             data: dataVersements,
-                            borderColor: '#000000', // Noir pour les versements
+                            borderColor: '#000000',
                             backgroundColor: 'rgba(0, 0, 0, 0.2)',
                             borderWidth: 2,
                             fill: true,
-                            pointRadius: 0,
+                            pointRadius: 3,
                         },
                         {
                             label: 'Capital total',
                             data: dataCapital,
-                            borderColor: '#BB9959', // Doré pour le capital total
+                            borderColor: '#BB9959',
                             backgroundColor: 'rgba(187, 153, 89, 0.4)',
                             borderWidth: 2,
                             fill: true,
-                            pointRadius: 0,
+                            pointRadius: 3,
                         }
                     ]
                 },
