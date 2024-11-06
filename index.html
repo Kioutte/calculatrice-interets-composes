@@ -217,6 +217,7 @@
 
         <button onclick="calculerInteretsComposes()">Calculer</button>
 
+        <!-- Section pour afficher les résultats -->
         <div class="result" id="resultat"></div>
 
         <div id="chartContainer">
@@ -277,6 +278,14 @@
             let formattedTotalVersements = formatNumberWithDot(totalVersements);
             let formattedInteretsGagnes = formatNumberWithDot(capital_final - totalVersements);
         
+            // Mise à jour de la section des résultats
+            document.getElementById("resultat").innerHTML = `
+                <strong>Capital final :</strong> ${formattedCapitalFinal} €<br>
+                <strong>Versements totaux :</strong> ${formattedTotalVersements} €<br>
+                <strong>Intérêts gagnés :</strong> ${formattedInteretsGagnes} €
+            `;
+
+            // Générer le résumé en dessous du graphique, en mettant en gras et en couleur les variables
             document.getElementById("summaryText").innerHTML = `
                 Avec un capital initial de <strong style="color: #BB9959;">${capital} €</strong> et en investissant mensuellement 
                 <strong style="color: #BB9959;">${epargne} €</strong> pendant <strong style="color: #BB9959;">${duree} ans</strong> à 
@@ -285,6 +294,7 @@
                 <span class="disclaimer">Cet outil sert uniquement à des fins d'information. Il ne doit pas être considéré comme un conseil financier.</span>
             `;
 
+            // Création ou mise à jour du graphique
             if (window.myChart instanceof Chart) {
                 window.myChart.destroy();
             }
