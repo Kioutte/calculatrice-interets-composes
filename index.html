@@ -119,6 +119,14 @@
             text-align: center;
         }
 
+        /* Note de bas de page dans le résumé, plus petite */
+        .disclaimer {
+            font-size: 0.8em;
+            color: #2D2926;
+            margin-top: 10px;
+            display: block;
+        }
+
         /* Styles spécifiques pour l'impression */
         @page {
             size: A4; /* Forcer la taille de la page à A4 */
@@ -173,7 +181,6 @@
             }
             .logo-print {
                 display: block; /* Afficher le logo uniquement à l'impression */
-                display: block;
                 text-align: center;
                 margin-bottom: 5mm;
                 max-height: 250px; /* Limiter la hauteur du logo pour économiser de l'espace */
@@ -270,18 +277,12 @@
             let formattedTotalVersements = formatNumberWithDot(totalVersements);
             let formattedInteretsGagnes = formatNumberWithDot(capital_final - totalVersements);
         
-            document.getElementById("resultat").innerHTML = `
-                <strong>Capital final :</strong> ${formattedCapitalFinal} €<br>
-                <strong>Versements totaux :</strong> ${formattedTotalVersements} €<br>
-                <strong>Intérêts gagnés :</strong> ${formattedInteretsGagnes} €
-            `;
-
-            // Générer le résumé en dessous du graphique, en mettant en gras et en couleur les variables
             document.getElementById("summaryText").innerHTML = `
                 Avec un capital initial de <strong style="color: #BB9959;">${capital} €</strong> et en investissant mensuellement 
                 <strong style="color: #BB9959;">${epargne} €</strong> pendant <strong style="color: #BB9959;">${duree} ans</strong> à 
                 <strong style="color: #BB9959;">${taux * 100} %</strong>, vous obtenez un capital de 
                 <strong style="color: #BB9959;">${formattedCapitalFinal} €</strong>.
+                <span class="disclaimer">Cet outil sert uniquement à des fins d'information. Il ne doit pas être considéré comme un conseil financier.</span>
             `;
 
             if (window.myChart instanceof Chart) {
