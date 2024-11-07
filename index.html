@@ -27,14 +27,14 @@
             color: #2D2926;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
             background-color: #f9f9f9; /* Légère couleur de fond pour la carte */
-            margin-top: 30px;
+            margin-top: 10px; /* Réduction de l'espacement vertical */
         }
         .title-container {
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            margin-bottom: 20px;
+            margin-bottom: 10px; /* Réduction de l'espace entre le titre et le contenu */
             text-align: center;
         }
         .title-container h1 {
@@ -81,7 +81,7 @@
             color: #ffffff; /* Texte blanc sur survol */
         }
         .result {
-            text-align: center;
+            text-align: center; /* Centrer les résultats */
             margin-top: 20px;
             font-size: 1.2em; /* Légère augmentation pour accentuer les résultats */
             color: #2D2926;
@@ -91,8 +91,21 @@
             border: 1px solid #BB9959; /* Bordure dorée pour souligner */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
+        .result ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .result ul li {
+            margin-bottom: 10px;
+            font-weight: bold; /* Texte en gras pour les libellés */
+            color: #2D2926; /* Texte noir pour les libellés */
+        }
+        .highlight {
+            color: #BB9959;
+            font-weight: bold;
+        }
         #chartContainer {
-            margin-top: 40px;
+            margin-top: 30px; /* Réduction de l'espacement */
             background-color: #f9f9f9;
             padding: 20px;
             border-radius: 8px;
@@ -100,7 +113,7 @@
         }
         #myChart {
             max-width: 100%;
-            height: 400px;
+            height: 400px; /* Taille bien définie pour éviter le débordement */
         }
 
         /* Logo caché par défaut */
@@ -122,6 +135,17 @@
             color: #2D2926;
             margin-top: 10px;
             display: block;
+        }
+
+        /* Section contact */
+        .contact {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1em;
+            color: #2D2926;
+        }
+        .contact p {
+            margin-bottom: 5px;
         }
 
         /* Styles spécifiques pour l'impression */
@@ -194,11 +218,18 @@
         <div class="result" id="resultat"></div>
 
         <div id="chartContainer">
+            <h3 style="text-align: center;">Évolution du Capital avec les Versements Mensuels et les Intérêts</h3> <!-- Titre ajouté pour le graphique -->
             <canvas id="myChart"></canvas>
         </div>
 
         <!-- Phrase de résumé générée -->
         <div class="summary" id="summaryText"></div>
+
+        <!-- Section de contact avec appel à l'action -->
+        <div class="contact">
+            <p><strong>Pour en savoir plus sur nos services d'investissement, contactez-nous dès aujourd'hui !</strong></p>
+            <p>Email: sales@pire.be | Téléphone: +32 71 325 411</p>
+        </div>
 
         <!-- Bouton d'impression avec le même design que "Calculer" -->
         <button onclick="imprimerPage()">Imprimer la page</button>
@@ -253,9 +284,11 @@
         
             // Mise à jour de la section des résultats
             document.getElementById("resultat").innerHTML = `
-                <strong>Capital final :</strong> ${formattedCapitalFinal} €<br>
-                <strong>Versements totaux :</strong> ${formattedTotalVersements} €<br>
-                <strong>Intérêts gagnés :</strong> ${formattedInteretsGagnes} €
+                <ul>
+                    <li><strong>Capital final :</strong> <span class="highlight">${formattedCapitalFinal} €</span></li>
+                    <li><strong>Versements totaux :</strong> <span class="highlight">${formattedTotalVersements} €</span></li>
+                    <li><strong>Intérêts gagnés :</strong> <span class="highlight">${formattedInteretsGagnes} €</span></li>
+                </ul>
             `;
 
             // Générer le résumé en dessous du graphique, en mettant en gras et en couleur les variables
@@ -283,24 +316,24 @@
                             data: dataVersements,
                             borderColor: '#000000',
                             backgroundColor: 'rgba(0, 0, 0, 0.2)',
-                            borderWidth: 2,
+                            borderWidth: 3, /* Lignes plus épaisses pour meilleure visibilité */
                             fill: true,
-                            pointRadius: 2,
+                            pointRadius: 3, /* Points plus gros pour meilleure visibilité */
                         },
                         {
                             label: 'Capital total',
                             data: dataCapital,
                             borderColor: '#BB9959',
                             backgroundColor: 'rgba(187, 153, 89, 0.4)',
-                            borderWidth: 2,
+                            borderWidth: 3, /* Lignes plus épaisses pour meilleure visibilité */
                             fill: true,
-                            pointRadius: 2,
+                            pointRadius: 3, /* Points plus gros pour meilleure visibilité */
                         }
                     ]
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false,
+                    maintainAspectRatio: true, /* Maintenir le ratio d'aspect pour éviter les débordements */
                     scales: {
                         x: {
                             ticks: {
