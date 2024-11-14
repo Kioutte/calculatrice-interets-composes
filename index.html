@@ -10,8 +10,8 @@
     <style>
         /* Styles généraux */
         body {
-            font-family: 'Georgia', serif; /* Harmonisation avec le style du site */
-            background-color: #ffffff;
+            font-family: 'Display Fair', serif; /* Harmonisation avec le style du site */
+            background-color: #000000;
             color: #2D2926;
             display: flex;
             justify-content: center;
@@ -22,11 +22,11 @@
         .container {
             width: 90%;
             max-width: 800px;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 25px;
+            border-radius: 20px;
             color: #2D2926;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-            background-color: #f9f9f9; /* Légère couleur de fond pour la carte */
+            background-color: #ffffff; /* Légère couleur de fond pour la carte */
             margin-top: 10px; /* Réduction de l'espacement vertical */
         }
         .title-container {
@@ -39,18 +39,19 @@
         }
         .title-container h1 {
             color: #2D2926;
-            font-size: 2.5em;
+            font-size: 3em;
             font-weight: bold; /* Accentuation du titre principal */
             margin: 0;
         }
         .title-container h2 {
             color: #2D2926;
-            font-size: 1.2em;
+            font-size: 1.3em;
             font-weight: normal;
             margin-top: 10px;
         }
         label {
-            display: block;
+            font-family: 'Josefin Sans', sans-serif;
+	    display: block;
             margin-top: 10px;
             font-weight: normal;
             color: #2D2926;
@@ -60,12 +61,12 @@
         button {
             width: 100%;
             padding: 10px;
-            border-radius: 5px;
+            border-radius: 10px;
             border: 1px solid #BB9959; /* Bordure dorée */
             background-color: #ffffff; /* Fond blanc */
             color: #2D2926; /* Texte couleur générale */
             font-weight: bold;
-            font-size: 1.1em;
+            font-size: 1.2em;
             box-sizing: border-box; /* Inclut la bordure et le padding dans la largeur totale */
             margin-bottom: 15px; /* Pour espacer de manière cohérente */
             transition: all 0.3s ease;
@@ -79,37 +80,39 @@
         button:hover {
             background-color: #BB9959; /* Fond doré sur survol */
             color: #ffffff; /* Texte blanc sur survol */
+
         }
         .result {
             text-align: center; /* Centrer les résultats */
-            margin-top: 20px;
-            font-size: 1.2em; /* Légère augmentation pour accentuer les résultats */
+            margin-top: 15px;
+            font-size: 1.3em; /* Légère augmentation pour accentuer les résultats */
             color: #2D2926;
             background-color: #ffffff; /* Couleur de fond blanc pour contraste */
             padding: 15px;
             border-radius: 10px;
-            border: 1px solid #BB9959; /* Bordure dorée pour souligner */
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 2px solid #BB9959; /* Bordure dorée pour souligner */
+            box-shadow: 0 0px 0px rgba(0, 0, 0, 0.1);
         }
         .result ul {
             list-style: none;
             padding-left: 0;
         }
         .result ul li {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             font-weight: bold; /* Texte en gras pour les libellés */
             color: #2D2926; /* Texte noir pour les libellés */
         }
         .highlight {
             color: #BB9959;
-            font-weight: bold;
+            font-weight: Bold;
         }
         #chartContainer {
             margin-top: 30px; /* Réduction de l'espacement */
-            background-color: #f9f9f9;
+            background-color: #ffffff;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+ 	    border: 2px solid #BB9959; /* Bordure dorée pour souligner */
+            box-shadow: 0 0px 0px rgba(0, 0, 0, 0.1);
         }
         #myChart {
             max-width: 100%;
@@ -124,6 +127,8 @@
         /* Texte généré pour résumer les résultats */
         .summary {
             margin-top: 20px;
+	    font-family: 'Josefin Sans', sans-serif;
+	    font-weight: bold;
             font-size: 1em;
             color: #2D2926;
             text-align: center;
@@ -133,6 +138,7 @@
         .disclaimer {
             font-size: 0.8em;
             color: #2D2926;
+	    font-weight: normal;
             margin-top: 10px;
             display: block;
         }
@@ -140,6 +146,7 @@
         /* Section contact */
         .contact {
             text-align: center;
+	    font-family: 'Josefin Sans', sans-serif;
             margin-top: 30px;
             font-size: 1em;
             color: #2D2926;
@@ -316,7 +323,7 @@
                             data: dataVersements,
                             borderColor: '#000000',
                             backgroundColor: 'rgba(0, 0, 0, 0.2)',
-                            borderWidth: 3, /* Lignes plus épaisses pour meilleure visibilité */
+                            borderWidth: 2, /* Lignes plus épaisses pour meilleure visibilité */
                             fill: true,
                             pointRadius: 3, /* Points plus gros pour meilleure visibilité */
                         },
@@ -325,7 +332,7 @@
                             data: dataCapital,
                             borderColor: '#BB9959',
                             backgroundColor: 'rgba(187, 153, 89, 0.4)',
-                            borderWidth: 3, /* Lignes plus épaisses pour meilleure visibilité */
+                            borderWidth: 2, /* Lignes plus épaisses pour meilleure visibilité */
                             fill: true,
                             pointRadius: 3, /* Points plus gros pour meilleure visibilité */
                         }
@@ -341,7 +348,11 @@
                                 font: {
                                     size: 10,
                                 }
-                            }
+                            },
+			    grid: {
+                    	  	color: 'rgba(0, 0, 0, 0.1)', // Couleur plus claire pour la grille
+                    		lineWidth: 0.4, // Épaisseur plus fine
+			    }
                         },
                         y: {
                             beginAtZero: true,
@@ -349,9 +360,17 @@
                                 color: '#2D2926',
                                 font: {
                                     size: 10,
-                                }
+
+                            },
+				callback: function(value, index, values) {
+                        	return value.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 0 });
+			    }
+			},
+			grid: {
+	                       color: 'rgba(0, 0, 0, 0.1)', // Même couleur claire pour l'axe y
+           	               lineWidth: 0.4, // Épaisseur plus fine pour un style plus subtil
                             }
-                        }
+			}
                     },
                     plugins: {
                         legend: {
