@@ -23,11 +23,12 @@
             width: 90%;
             max-width: 800px;
             padding: 25px;
-            border-radius: 20px;
+            border-radius: 0px;
             color: #2D2926;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
             background-color: #ffffff; /* Légère couleur de fond pour la carte */
-            margin-top: 10px; /* Réduction de l'espacement vertical */
+	    margin-bottom: 20px;
+            margin-top: 20px; /* Réduction de l'espacement vertical */
         }
         .title-container {
             display: flex;
@@ -45,7 +46,8 @@
         }
         .title-container h2 {
             color: #2D2926;
-            font-size: 1.3em;
+	    font-family: 'Josefin Sans', sans-serif;
+            font-size: 1.1em;
             font-weight: normal;
             margin-top: 10px;
         }
@@ -57,11 +59,10 @@
             color: #2D2926;
             font-size: 1em;
         }
-        input[type="number"],
-        button {
+        input[type="number"] {
             width: 100%;
             padding: 10px;
-            border-radius: 10px;
+            border-radius: 0px;
             border: 1px solid #BB9959; /* Bordure dorée */
             background-color: #ffffff; /* Fond blanc */
             color: #2D2926; /* Texte couleur générale */
@@ -71,11 +72,19 @@
             margin-bottom: 15px; /* Pour espacer de manière cohérente */
             transition: all 0.3s ease;
         }
-        button {
-            cursor: pointer;
-            color: #BB9959; /* Texte doré pour le bouton */
-            border: 2px solid #BB9959; /* Bordure dorée */
-            margin-top: 10px; /* Légère marge en haut pour espacer le bouton des champs */
+            button {
+   	    width: 100%;
+    	    padding: 10px;
+	    border-radius: 0;
+	    border: 2px solid #BB9959; /* Bordure dorée */
+	    background-color: #BB9959; /* Fond doré */
+	    color: #ffffff; /* Texte blanc */
+	    font-weight: bold;
+	    font-size: 1.2em;
+	    box-sizing: border-box; /* Inclut bordure et padding dans la largeur */
+	    margin: 10px 0 15px; /* Espacement haut et bas */
+	    transition: all 0.3s ease;
+	    cursor: pointer;
         }
         button:hover {
             background-color: #BB9959; /* Fond doré sur survol */
@@ -89,7 +98,7 @@
             color: #2D2926;
             background-color: #ffffff; /* Couleur de fond blanc pour contraste */
             padding: 15px;
-            border-radius: 10px;
+            border-radius: 0px;
             border: 2px solid #BB9959; /* Bordure dorée pour souligner */
             box-shadow: 0 0px 0px rgba(0, 0, 0, 0.1);
         }
@@ -110,7 +119,7 @@
             margin-top: 30px; /* Réduction de l'espacement */
             background-color: #ffffff;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 0px;
  	    border: 2px solid #BB9959; /* Bordure dorée pour souligner */
             box-shadow: 0 0px 0px rgba(0, 0, 0, 0.1);
         }
@@ -192,7 +201,7 @@
 <body>
     <div class="container">
         <div class="title-container">
-            <h1>Calculatrice d'intérêts composés</h1>
+            <h1>Calculatrice <strong style="color: #BB9959;">d'intérêts composés<strong style="color: #BB9959;"></h1>
             <h2>Pire Asset Management vous aide à calculer simplement les intérêts composés que vous pouvez générer grâce à vos investissements</h2>
         </div>
         
